@@ -1,0 +1,14 @@
+{
+  "changelogDate": "20220411160405",
+  "fields": [
+    {
+      "fieldName": "test",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Personnes",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="oDF">
+      <h2 data-cy="oDFDetailsHeading"><span jhiTranslate="myFirstJhipsterApp.oDF.detail.title">ODF</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.id">Id</span></dt>
+        <dd>
+          <span>{{ oDF.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.status">Status</span></dt>
+        <dd>
+          <span>{{ oDF.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.operationName">Operation Name</span></dt>
+        <dd>
+          <span>{{ oDF.operationName }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.dateofcreation">Dateofcreation</span></dt>
+        <dd>
+          <span>{{ oDF.dateofcreation | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.dateofmodification">Dateofmodification</span></dt>
+        <dd>
+          <span>{{ oDF.dateofmodification | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.lastmodificationuser">Lastmodificationuser</span></dt>
+        <dd>
+          <span>{{ oDF.lastmodificationuser }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.people">People</span></dt>
+        <dd>
+          <div *ngIf="oDF.people">
+            <a [routerLink]="['/people', oDF.people?.id, 'view']">{{ oDF.people?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.oDF.jobHistory">Job History</span></dt>
+        <dd>
+          <div *ngIf="oDF.jobHistory">
+            <a [routerLink]="['/job-history', oDF.jobHistory?.id, 'view']">{{ oDF.jobHistory?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/odf', oDF.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "myFirstJhipsterApp": {
+    "oDF": {
+      "home": {
+        "title": "ODFS",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau ODF",
+        "createOrEditLabel": "Créer ou éditer un ODF",
+        "notFound": "Aucun ODF trouvé"
+      },
+      "created": "Un nouveau ODF a été créé avec l'identifiant {{ param }}",
+      "updated": "Le ODF avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le ODF avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le ODF {{ id }} ?"
+      },
+      "detail": {
+        "title": "ODF"
+      },
+      "id": "Id",
+      "status": "Status",
+      "operationName": "Operation Name",
+      "dateofcreation": "Dateofcreation",
+      "dateofmodification": "Dateofmodification",
+      "lastmodificationuser": "Lastmodificationuser",
+      "people": "People",
+      "jobHistory": "Job History"
+    }
+  }
+}

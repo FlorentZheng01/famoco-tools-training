@@ -1,0 +1,141 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-odf-heading" data-cy="ODFCreateUpdateHeading" jhiTranslate="myFirstJhipsterApp.oDF.home.createOrEditLabel">
+        Create or edit a ODF
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.id" for="field_id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="editForm.get('id')!.value != null"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.status" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.operationName" for="field_operationName">Operation Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="operationName"
+            id="field_operationName"
+            data-cy="operationName"
+            formControlName="operationName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.dateofcreation" for="field_dateofcreation">Dateofcreation</label>
+          <div class="input-group">
+            <input
+              id="field_dateofcreation"
+              data-cy="dateofcreation"
+              type="text"
+              class="form-control"
+              name="dateofcreation"
+              ngbDatepicker
+              #dateofcreationDp="ngbDatepicker"
+              formControlName="dateofcreation"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateofcreationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.dateofmodification" for="field_dateofmodification"
+            >Dateofmodification</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateofmodification"
+              data-cy="dateofmodification"
+              type="text"
+              class="form-control"
+              name="dateofmodification"
+              ngbDatepicker
+              #dateofmodificationDp="ngbDatepicker"
+              formControlName="dateofmodification"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateofmodificationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.lastmodificationuser" for="field_lastmodificationuser"
+            >Lastmodificationuser</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lastmodificationuser"
+            id="field_lastmodificationuser"
+            data-cy="lastmodificationuser"
+            formControlName="lastmodificationuser"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.people" for="field_people">People</label>
+          <select class="form-control" id="field_people" data-cy="people" name="people" formControlName="people">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="peopleOption.id === editForm.get('people')!.value?.id ? editForm.get('people')!.value : peopleOption"
+              *ngFor="let peopleOption of peopleCollection; trackBy: trackPeopleById"
+            >
+              {{ peopleOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.oDF.jobHistory" for="field_jobHistory">Job History</label>
+          <select class="form-control" id="field_jobHistory" data-cy="jobHistory" name="jobHistory" formControlName="jobHistory">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                jobHistoryOption.id === editForm.get('jobHistory')!.value?.id ? editForm.get('jobHistory')!.value : jobHistoryOption
+              "
+              *ngFor="let jobHistoryOption of jobHistoriesCollection; trackBy: trackJobHistoryById"
+            >
+              {{ jobHistoryOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

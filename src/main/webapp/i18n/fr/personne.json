@@ -1,0 +1,17 @@
+{
+  "myFirstJhipsterApp": {
+    "personne": {
+      "home": {
+        "title": "Personnes",
+        "refreshListLabel": "Actualiser la liste",
+        "notFound": "Aucun Personne trouvé"
+      },
+      "detail": {
+        "title": "Personne"
+      },
+      "id": "ID",
+      "personne_id": "Personne Id",
+      "name": "Name"
+    }
+  }
+}

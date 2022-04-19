@@ -1,0 +1,19 @@
+{
+  "changelogDate": "20220411154944",
+  "fields": [
+    {
+      "fieldName": "personne_id",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Personne",
+  "pagination": "no",
+  "readOnly": true,
+  "relationships": [],
+  "service": "no"
+}

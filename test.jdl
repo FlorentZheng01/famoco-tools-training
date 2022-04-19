@@ -1,0 +1,56 @@
+
+entity ODF {
+	id String,
+    status String,
+    operationName String,
+    dateofcreation LocalDate,
+    dateofmodification LocalDate,
+    lastmodificationuser String
+}
+
+entity Country {
+	countryName String
+}
+
+/**
+ * The Employee entity.
+ */
+entity People {
+	/**
+	* The firstname attribute.
+	*/
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+
+}
+
+entity JobHistory {
+	startDate Instant,
+	endDate Instant,
+	language Language
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+relationship OneToOne {
+	Country to People
+}
+
+relationship OneToOne {
+	ODF to People
+}
+
+relationship OneToOne {
+	ODF to JobHistory
+}
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="country">
+      <h2 data-cy="countryDetailsHeading"><span jhiTranslate="myFirstJhipsterApp.country.detail.title">Country</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ country.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.country.description">Description</span></dt>
+        <dd>
+          <span>{{ country.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.country.people">People</span></dt>
+        <dd>
+          <div *ngIf="country.people">
+            <a [routerLink]="['/people', country.people?.id, 'view']">{{ country.people?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.country.personne">Personne</span></dt>
+        <dd>
+          <div *ngIf="country.personne">
+            <a [routerLink]="['/personne', country.personne?.id, 'view']">{{ country.personne?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/country', country.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -48,6 +48,13 @@ public class CacheConfiguration {
             createCache(cm, com.famoco.myfirstjhipster.domain.User.class.getName());
             createCache(cm, com.famoco.myfirstjhipster.domain.Authority.class.getName());
             createCache(cm, com.famoco.myfirstjhipster.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.famoco.myfirstjhipster.domain.ODF.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.Country.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.People.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.JobHistory.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.Personne.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.Personnes.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.FileName.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

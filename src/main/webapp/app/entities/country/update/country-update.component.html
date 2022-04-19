@@ -1,0 +1,75 @@
+<div *ngIf="loaderService.isLoading | async">
+  <mat-progress-bar class="mb-5" mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-country-heading" data-cy="CountryCreateUpdateHeading" jhiTranslate="myFirstJhipsterApp.country.home.createOrEditLabel">
+        Create or edit a Country
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.country.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.country.people" for="field_people">People</label>
+          <select class="form-control" id="field_people" data-cy="people" name="people" formControlName="people">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="peopleOption.id === editForm.get('people')!.value?.id ? editForm.get('people')!.value : peopleOption"
+              *ngFor="let peopleOption of peopleCollection; trackBy: trackPeopleById"
+            >
+              {{ peopleOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.country.personne" for="field_personne">Personne</label>
+          <select class="form-control" id="field_personne" data-cy="personne" name="personne" formControlName="personne">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="personneOption.id === editForm.get('personne')!.value?.id ? editForm.get('personne')!.value : personneOption"
+              *ngFor="let personneOption of personnesSharedCollection; trackBy: trackPersonneById"
+            >
+              {{ personneOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

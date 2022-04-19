@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fileName">
+      <h2 data-cy="fileNameDetailsHeading"><span jhiTranslate="myFirstJhipsterApp.fileName.detail.title">File Name</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ fileName.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.fileName.name">Name</span></dt>
+        <dd>
+          <span>{{ fileName.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.fileName.content">Content</span></dt>
+        <dd>
+          <div *ngIf="fileName.content">
+            <a (click)="openFile(fileName.content, fileName.contentContentType)" jhiTranslate="entity.action.open">open</a>
+            {{ fileName.contentContentType }}, {{ byteSize(fileName.content) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.fileName.description">Description</span></dt>
+        <dd>
+          <span>{{ fileName.description }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/file-name', fileName.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

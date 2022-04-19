@@ -7,6 +7,13 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entités",
+        "odf": "ODF",
+        "country": "Country",
+        "people": "People",
+        "jobHistory": "Job History",
+        "personne": "Personne",
+        "personnes": "Personnes",
+        "fileName": "File Name",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

@@ -1,0 +1,55 @@
+{
+  "applications": "*",
+  "changelogDate": "20220411153424",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "odf",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "operationName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateofcreation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateofmodification",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "lastmodificationuser",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ODF",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "people",
+      "otherEntityRelationshipName": "oDF",
+      "ownerSide": true,
+      "relationshipName": "people",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "jobHistory",
+      "otherEntityRelationshipName": "oDF",
+      "ownerSide": true,
+      "relationshipName": "jobHistory",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

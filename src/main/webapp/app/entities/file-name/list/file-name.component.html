@@ -1,0 +1,86 @@
+<div *ngIf="loaderService.isLoading | async">
+  <mat-progress-bar class="mb-5" mode="indeterminate"></mat-progress-bar>
+</div>
+<div>
+  <h2 id="page-heading" data-cy="FileNameHeading">
+    <span jhiTranslate="myFirstJhipsterApp.fileName.home.title">File Names</span>
+
+
+
+    <div>
+
+      <mat-form-field style="font-size: 20px" class=" w-75" appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input  matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+      <button class="btn btn-info " (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="myFirstJhipsterApp.fileName.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-file-name  "
+        [routerLink]="['/file-name/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="myFirstJhipsterApp.fileName.home.createLabel"> Create a new File Name </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="fileNames?.length === 0">
+    <span jhiTranslate="myFirstJhipsterApp.fileName.home.notFound">No fileNames found</span>
+  </div>
+
+  <div class="table-responsive shadow-lg mt-3 pb-5" id="entities" *ngIf="fileNames && fileNames.length > 0">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation col-12" aria-describedby="page-heading">
+
+
+      <ng-container matColumnDef="id">
+        <tr>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ID" scope="col"> ID</th>
+          <td mat-cell *matCellDef="let fileName"> {{fileName.id}} </td>
+        </tr>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Name"> Name</th>
+        <td mat-cell *matCellDef="let fileName"> {{fileName.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Description"> Description</th>
+        <td mat-cell *matCellDef="let fileName"> {{fileName.description}} </td>
+      </ng-container>
+      <ng-container cdkColumnDef="look">
+        <th mat-header-cell *matHeaderCellDef> Look</th>
+        <td mat-cell *matCellDef="let fileName">
+          <button [routerLink]="['/file-name', fileName.id, 'view']" mat-raised-button color="primary">Look</button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Edit</th>
+        <td mat-cell *matCellDef="let fileName">
+          <button [routerLink]="['/file-name', fileName.id, 'edit']"
+                  mat-raised-button color="accent">Edit
+          </button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete</th>
+        <td mat-cell *matCellDef="let fileName">
+          <button (click)="delete(fileName)" mat-raised-button color="warn">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+  </div>
+</div>

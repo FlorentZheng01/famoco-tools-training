@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20220411153425",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "country",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Country",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "people",
+      "otherEntityRelationshipName": "country",
+      "ownerSide": true,
+      "relationshipName": "people",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "personne",
+      "relationshipName": "personne",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

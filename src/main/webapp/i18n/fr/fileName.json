@@ -1,0 +1,26 @@
+{
+  "myFirstJhipsterApp": {
+    "fileName": {
+      "home": {
+        "title": "FileNames",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau File Name",
+        "createOrEditLabel": "Créer ou éditer un File Name",
+        "notFound": "Aucun File Name trouvé"
+      },
+      "created": "Un nouveau File Name a été créé avec l'identifiant {{ param }}",
+      "updated": "Le File Name avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le File Name avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le File Name {{ id }} ?"
+      },
+      "detail": {
+        "title": "File Name"
+      },
+      "id": "ID",
+      "name": "Name",
+      "content": "Content",
+      "description": "Description"
+    }
+  }
+}

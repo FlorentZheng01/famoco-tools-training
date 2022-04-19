@@ -1,0 +1,24 @@
+{
+  "myFirstJhipsterApp": {
+    "personnes": {
+      "home": {
+        "title": "Personnes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Personnes",
+        "createOrEditLabel": "Créer ou éditer un Personnes",
+        "notFound": "Aucun Personnes trouvé"
+      },
+      "created": "Un nouveau Personnes a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Personnes avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Personnes avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Personnes {{ id }} ?"
+      },
+      "detail": {
+        "title": "Personnes"
+      },
+      "id": "ID",
+      "test": "Test"
+    }
+  }
+}
