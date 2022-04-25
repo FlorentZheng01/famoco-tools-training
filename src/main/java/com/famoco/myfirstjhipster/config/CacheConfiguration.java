@@ -55,6 +55,8 @@ public class CacheConfiguration {
             createCache(cm, com.famoco.myfirstjhipster.domain.Personne.class.getName());
             createCache(cm, com.famoco.myfirstjhipster.domain.Personnes.class.getName());
             createCache(cm, com.famoco.myfirstjhipster.domain.FileName.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.Device.class.getName());
+            createCache(cm, com.famoco.myfirstjhipster.domain.Retailer.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

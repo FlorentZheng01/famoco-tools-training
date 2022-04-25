@@ -36,7 +36,7 @@ describe('FileName Management Component', () => {
   });
 
   it('Should call load all on init', () => {
-    // WHENx
+    // WHEN
     comp.ngOnInit();
 
     // THEN

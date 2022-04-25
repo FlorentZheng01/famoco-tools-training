@@ -19,7 +19,7 @@
     "enableHibernateCache": true,
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
-    "entities": ["ODF", "Country", "People", "JobHistory", "Personne", "Personnes", "FileName"],
+    "entities": ["ODF", "Country", "People", "JobHistory", "Personne", "Personnes", "FileName", "Device", "Retailer"],
     "entitySuffix": "",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.8.1",
