@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,8 +11,9 @@ import { DeviceDeleteDialogComponent } from '../delete/device-delete-dialog.comp
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {debounceTime, delay, merge, startWith, switchMap} from "rxjs";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {filter} from "rxjs/operators";
+import {FormBuilder} from "@angular/forms";
+import {IRetailer} from "../../retailer/retailer.model";
+import {RetailerService} from "../../retailer/service/retailer.service";
 
 @Component({
   selector: 'jhi-device',
@@ -21,6 +22,7 @@ import {filter} from "rxjs/operators";
 })
 export class DeviceComponent implements AfterViewInit{
   devices: IDevice[] = [];
+  retailers: IRetailer[] = [];
   isLoading = false;
   totalItems = 0;
   itemsPerPage = 10;
@@ -30,6 +32,7 @@ export class DeviceComponent implements AfterViewInit{
   ngbPaginationPage = 1;
   searchForm = this.fb.group({
     searchFilter: "",
+    retailerFilter: "",
   })
   displayedColumns: string[] = ['id','famocoId','macAddress','dateCreation','view','edit','delete'];
 
@@ -42,6 +45,7 @@ export class DeviceComponent implements AfterViewInit{
 
   constructor(
     protected deviceService: DeviceService,
+    protected retailerService: RetailerService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected modalService: NgbModal,
@@ -49,6 +53,14 @@ export class DeviceComponent implements AfterViewInit{
   ) {
   }
 
+  loadRetailer(): void{
+    this.retailerService.query().subscribe({
+      next: (res: HttpResponse<IDevice[]>) => {
+        this.isLoading = false;
+        this.onSuccessRetailer(res.body as IDevice[], res.headers);
+      },
+    })
+  }
 
   loadPage(): void {
     this.isLoading = true;
@@ -58,6 +70,7 @@ export class DeviceComponent implements AfterViewInit{
         size: this.paginator!.pageSize,
         sort: this.sortTable(),
         search: this.searchForm.get('searchFilter')!.value ? this.searchForm.get('searchFilter')!.value: "",
+        retailerId: this.searchForm.get('retailerFilter')!.value ? this.searchForm.get('retailerFilter')!.value: "",
       }).pipe(delay(800))
       .subscribe({
         next: (res: HttpResponse<IDevice[]>) => {
@@ -75,7 +88,6 @@ export class DeviceComponent implements AfterViewInit{
     this.sort!.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
     merge(this.sort!.sortChange, this.paginator!.page)
       .pipe(
-
         startWith({}),debounceTime(600),
         switchMap(() => {
           this.isLoading = true;
@@ -84,8 +96,8 @@ export class DeviceComponent implements AfterViewInit{
             size: this.paginator!.pageSize,
             sort: this.sortTable(),
             search: this.searchForm.get('searchFilter')!.value ? this.searchForm.get('searchFilter')!.value: "",
+            retailerId: this.searchForm.get('retailerFilter')!.value ? this.searchForm.get('retailerFilter')!.value: "",
           })
-
         }),
         delay(800)).subscribe({
       next: (res: HttpResponse<IDevice[]>) => {
@@ -101,25 +113,9 @@ export class DeviceComponent implements AfterViewInit{
 
     this.sort!.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
     this.loadPage();
-    merge(this.sort!.sortChange, this.paginator!.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoading = true;
-          return this.deviceService.query({
-            page: this.paginator!.pageIndex,
-            size: this.paginator!.pageSize,
-            sort: this.sortTable(),
-            search: this.searchForm.get('searchFilter')!.value ? this.searchForm.get('searchFilter')!.value: "",
-          })
+    this.loadRetailer();
+    this.applyFilter();
 
-        }),
-      delay(800)).subscribe({
-      next: (res: HttpResponse<IDevice[]>) => {
-        this.isLoading = false;
-        this.onSuccess(res.body as IDevice[], res.headers);
-      },
-    });
 
 
 
@@ -153,6 +149,11 @@ export class DeviceComponent implements AfterViewInit{
   protected onSuccess(devices: IDevice[] | undefined, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.devices = devices as IDevice[];
+  }
+
+  protected onSuccessRetailer(retailers: IRetailer[] | undefined  , headers: HttpHeaders): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.retailers = retailers as IRetailer[];
   }
 
   protected onError(): void {

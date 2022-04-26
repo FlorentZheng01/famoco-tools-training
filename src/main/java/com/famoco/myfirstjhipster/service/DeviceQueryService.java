@@ -87,7 +87,7 @@ public class DeviceQueryService extends QueryService<Device> {
     }
 
     /**
-     * Return the number of matching entities in the database.
+     * Return the number xœof matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */

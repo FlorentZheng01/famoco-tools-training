@@ -146,14 +146,15 @@ public class DeviceResource {
      * {@code GET  /devices} : get all the devices.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
+     * @param search The string which the entities should match.
+     * @param retailerId The id which the entities should match from retailer database.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of devices in body.
      */
     @GetMapping("/devices")
     public ResponseEntity<List<DeviceDTO>> getAllDevices(
         @RequestParam(required = false, defaultValue = "") String search, @RequestParam(required = false) Long retailerId,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
-    ) {
+    ){
         log.debug("REST request to get Devices by search : {}, retailerId : {} ,pageable : {}", search, retailerId ,pageable);
         Page<DeviceDTO> page = deviceQueryService.findAll(search, retailerId , pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);

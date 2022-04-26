@@ -13,9 +13,10 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
-  imports: [SharedModule, DeviceRoutingModule, MatTableModule, MatButtonModule, CdkTableModule, MatSortModule, MatPaginatorModule, MatProgressBarModule, MatFormFieldModule, MatInputModule],
+    imports: [SharedModule, DeviceRoutingModule, MatTableModule, MatButtonModule, CdkTableModule, MatSortModule, MatPaginatorModule, MatProgressBarModule, MatFormFieldModule, MatInputModule, MatSelectModule],
   declarations: [DeviceComponent, DeviceDetailComponent, DeviceUpdateComponent, DeviceDeleteDialogComponent],
   entryComponents: [DeviceDeleteDialogComponent],
 })

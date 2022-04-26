@@ -16,7 +16,10 @@ public interface DeviceRepository extends JpaRepository<Device, Long>, JpaSpecif
     @Query("select device from Device device where device.macAddress like concat('%', ?1 ,'%') ")
     Page<Device> findWithSearchPageable(String search,Pageable pageable);
 
-    @Query("select device from Device device left join device.retailer retailer where retailer.id = ?2 and device.macAddress like concat('%', ?1 ,'%')  ")
+    @Query("select device " +
+        " from Device device " +
+        " left join device.retailer retailer " +
+        " where (retailer.id = ?2) or (?2 is null) and device.macAddress like concat('%', ?1 ,'%')  ")
     Page<Device> findWithRetailerSearchPageable(String search, Long retailerId, Pageable pageable);
 
 
