@@ -1,0 +1,17 @@
+.searchfilter{
+  width: 35%;
+  margin-left: 1%;
+}
+
+.retailerfilter{
+  width: 35%;
+  margin-right: 3%;
+  margin-left: 1%;
+}
+
+.progress-bar{
+  position: absolute;
+  width: 97%;
+}
+
+

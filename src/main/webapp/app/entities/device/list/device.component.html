@@ -1,0 +1,99 @@
+<link href="device-list.css" rel="stylesheet">
+
+<div>
+  <h2 id="page-heading" class="text-center" data-cy="DeviceHeading">
+    <span jhiTranslate="myFirstJhipsterApp.device.home.title">Devices</span>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="devices?.length === 0">
+    <span jhiTranslate="myFirstJhipsterApp.device.home.notFound">No devices found</span>
+  </div>
+  <form [formGroup]="searchForm">
+    <mat-form-field class="searchfilter" appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput name="searchFilter" (keyup)="applyFilter()" formControlName="searchFilter" placeholder="Search">
+    </mat-form-field>
+    <mat-form-field class="retailerfilter" appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput name="searchFilter" (keyup)="applyFilter()" formControlName="searchFilter" placeholder="Search">
+    </mat-form-field>
+    <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <span jhiTranslate="myFirstJhipsterApp.device.home.refreshListLabel">Refresh List</span>
+    </button>
+    <button
+      id="jh-create-entity"
+      data-cy="entityCreateButton"
+      class="btn btn-primary jh-create-entity create-device"
+      [routerLink]="['/device/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span jhiTranslate="myFirstJhipsterApp.device.home.createLabel"> Create a new Device </span>
+    </button>
+  </form>
+
+
+
+  <div class="table-responsive shadow-lg mt-3 pb-5" id="entities">
+      <mat-progress-bar *ngIf="isLoading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
+    <table mat-table matSort matSortActive="famocoId" matSortDirection="desc" [dataSource]="devices" class="mat-elevation-z8 col-12">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let device"> {{device.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="famocoId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> FamocoID </th>
+        <td mat-cell *matCellDef="let device"> {{device.famocoId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="macAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mac Address </th>
+        <td mat-cell *matCellDef="let device"> {{device.macAddress}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dateCreation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>
+        <td mat-cell *matCellDef="let device"> {{device.dateCreation}} </td>
+      </ng-container>
+      <ng-container cdkColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef>View</th>
+        <td mat-cell *matCellDef="let device">
+          <button [routerLink]="['/device', device.id, 'view']" mat-raised-button color="primary">View</button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Edit</th>
+        <td mat-cell *matCellDef="let device">
+          <button [routerLink]="['/device', device.id, 'edit']"
+                  mat-raised-button color="accent">Edit
+          </button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete</th>
+        <td mat-cell *matCellDef="let device">
+          <button (click)="delete(device)" mat-raised-button color="warn">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+    </table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25,100]"
+                   aria-label="Select page">
+
+    </mat-paginator>
+
+
+
+  </div>
+
+</div>

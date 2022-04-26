@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="device">
+      <h2 data-cy="deviceDetailsHeading"><span jhiTranslate="myFirstJhipsterApp.device.detail.title">Device</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ device.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.device.famocoId">Famoco Id</span></dt>
+        <dd>
+          <span>{{ device.famocoId }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.device.macAddress">Mac Address</span></dt>
+        <dd>
+          <span>{{ device.macAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.device.dateCreation">Date Creation</span></dt>
+        <dd>
+          <span>{{ device.dateCreation | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myFirstJhipsterApp.device.retailer">Retailer</span></dt>
+        <dd>
+          <div *ngIf="device.retailer">
+            <a [routerLink]="['/retailer', device.retailer?.id, 'view']">{{ device.retailer?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/device', device.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

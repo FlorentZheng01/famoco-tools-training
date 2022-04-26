@@ -1,0 +1,27 @@
+{
+  "myFirstJhipsterApp": {
+    "retailer": {
+      "home": {
+        "title": "Retailers",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Retailer",
+        "createOrEditLabel": "Créer ou éditer un Retailer",
+        "notFound": "Aucun Retailer trouvé"
+      },
+      "created": "Un nouveau Retailer a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Retailer avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Retailer avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Retailer {{ id }} ?"
+      },
+      "detail": {
+        "title": "Retailer"
+      },
+      "id": "ID",
+      "name": "Name",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "mail": "Mail"
+    }
+  }
+}

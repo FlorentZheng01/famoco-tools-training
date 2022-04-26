@@ -1,0 +1,128 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-device-heading" data-cy="DeviceCreateUpdateHeading" jhiTranslate="myFirstJhipsterApp.device.home.createOrEditLabel">
+        Create or edit a Device
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.device.famocoId" for="field_famocoId">Famoco Id</label>
+          <input type="number" class="form-control" name="famocoId" id="field_famocoId" data-cy="famocoId" formControlName="famocoId" />
+          <div *ngIf="editForm.get('famocoId')!.invalid && (editForm.get('famocoId')!.dirty || editForm.get('famocoId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('famocoId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('famocoId')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.device.macAddress" for="field_macAddress">Mac Address</label>
+          <input
+            type="text"
+            class="form-control"
+            name="macAddress"
+            id="field_macAddress"
+            data-cy="macAddress"
+            formControlName="macAddress"
+          />
+          <div *ngIf="editForm.get('macAddress')!.invalid && (editForm.get('macAddress')!.dirty || editForm.get('macAddress')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('macAddress')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.device.dateCreation" for="field_dateCreation">Date Creation</label>
+          <div class="input-group">
+            <input
+              id="field_dateCreation"
+              data-cy="dateCreation"
+              type="text"
+              class="form-control"
+              name="dateCreation"
+              ngbDatepicker
+              #dateCreationDp="ngbDatepicker"
+              formControlName="dateCreation"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateCreationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="editForm.get('dateCreation')!.invalid && (editForm.get('dateCreation')!.dirty || editForm.get('dateCreation')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateCreation')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myFirstJhipsterApp.device.retailer" for="field_retailer">Retailer</label>
+          <select class="form-control" id="field_retailer" data-cy="retailer" name="retailer" formControlName="retailer">
+            <option *ngIf="!editForm.get('retailer')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="retailerOption.id === editForm.get('retailer')!.value?.id ? editForm.get('retailer')!.value : retailerOption"
+              *ngFor="let retailerOption of retailersSharedCollection; trackBy: trackRetailerById"
+            >
+              {{ retailerOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['retailer'])!.invalid && (editForm.get(['retailer'])!.dirty || editForm.get(['retailer'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['retailer'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
