@@ -14,27 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
-    default Optional<Country> findOneWithEagerRelationships(Long id) {
-        return this.findOneWithToOneRelationships(id);
-    }
 
-    default List<Country> findAllWithEagerRelationships() {
-        return this.findAllWithToOneRelationships();
-    }
 
-    default Page<Country> findAllWithEagerRelationships(Pageable pageable) {
-        return this.findAllWithToOneRelationships(pageable);
-    }
-
-    @Query(
-        value = "select distinct country from Country country left join fetch country.personne",
-        countQuery = "select count(distinct country) from Country country"
-    )
-    Page<Country> findAllWithToOneRelationships(Pageable pageable);
-
-    @Query("select distinct country from Country country left join fetch country.personne")
-    List<Country> findAllWithToOneRelationships();
-
-    @Query("select country from Country country left join fetch country.personne where country.id =:id")
-    Optional<Country> findOneWithToOneRelationships(@Param("id") Long id);
 }

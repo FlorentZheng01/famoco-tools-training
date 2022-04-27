@@ -140,25 +140,25 @@ public class CountryResource {
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of countries in body.
-     */
-    @GetMapping("/countries")
-    public List<Country> getAllCountries(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all Countries");
-        return countryRepository.findAllWithEagerRelationships();
-    }
-
-    /**
-     * {@code GET  /countries/:id} : get the "id" country.
-     *
-     * @param id the id of the country to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the country, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/countries/{id}")
-    public ResponseEntity<Country> getCountry(@PathVariable Long id) {
-        log.debug("REST request to get Country : {}", id);
-        Optional<Country> country = countryRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(country);
-    }
+//     */
+//    @GetMapping("/countries")
+//    public List<Country> getAllCountries() {
+//        log.debug("REST request to get all Countries");
+//        return countryRepository.findAll();
+//    }
+//
+//    /**
+//     * {@code GET  /countries/:id} : get the "id" country.
+//     *
+//     * @param id the id of the country to retrieve.
+//     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the country, or with status {@code 404 (Not Found)}.
+//     */
+//    @GetMapping("/countries/{id}")
+//    public ResponseEntity<Country> getCountry(@PathVariable Long id) {
+//        log.debug("REST request to get Country : {}", id);
+//        Optional<Country> country = countryRepository.findAll();
+//        return ResponseUtil.wrapOrNotFound(country);
+//    }
 
     /**
      * {@code DELETE  /countries/:id} : delete the "id" country.

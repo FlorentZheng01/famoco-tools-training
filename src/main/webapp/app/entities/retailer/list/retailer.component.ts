@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import {debounceTime, delay, merge, startWith, switchMap} from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IRetailer } from '../retailer.model';
 
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
+import { ASC, DESC} from 'app/config/pagination.constants';
 import { RetailerService } from '../service/retailer.service';
 import { RetailerDeleteDialogComponent } from '../delete/retailer-delete-dialog.component';
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'jhi-retailer',
   templateUrl: './retailer.component.html',
 })
-export class RetailerComponent implements OnInit {
-  retailers?: IRetailer[];
+export class RetailerComponent implements AfterViewInit {
+  retailers: IRetailer[] = [];
   isLoading = false;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
   page?: number;
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  displayedColumns: string[] = ['id','name','address','mail','view','edit','delete'];
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
+
 
   constructor(
     protected retailerService: RetailerService,
@@ -31,30 +37,46 @@ export class RetailerComponent implements OnInit {
     protected modalService: NgbModal
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    this.isLoading = true;
-    const pageToLoad: number = page ?? this.page ?? 1;
+  ngAfterViewInit(): void {
+    this.loadPage();
+    this.sort!.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
+    merge(this.sort!.sortChange, this.paginator!.page)
+      .pipe(
+        startWith({}),debounceTime(600),
+        switchMap(() => {
+          this.isLoading = true;
+          return this.retailerService.query({
+            page: this.paginator!.pageIndex,
+            size: this.paginator!.pageSize,
+            sort: this.sortTable(),
+          })
+        }),
+        delay(800)).subscribe({
+      next: (res: HttpResponse<IRetailer[]>) => {
+        this.isLoading = false;
+        this.onSuccess(res.body as IRetailer[], res.headers);
+      },
+    });
+  }
 
+  loadPage(): void {
+    this.isLoading = true;
     this.retailerService
       .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
+        page: this.paginator!.pageIndex,
+        size: this.paginator!.pageSize,
+        sort: this.sortTable(),
+      }).pipe(delay(800))
       .subscribe({
         next: (res: HttpResponse<IRetailer[]>) => {
           this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          this.onSuccess(res.body as IRetailer[], res.headers);
         },
         error: () => {
           this.isLoading = false;
           this.onError();
         },
       });
-  }
-
-  ngOnInit(): void {
-    this.handleNavigation();
   }
 
   trackId(_index: number, item: IRetailer): number {
@@ -72,43 +94,19 @@ export class RetailerComponent implements OnInit {
     });
   }
 
-  protected sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
-    if (this.predicate !== 'id') {
+  protected sortTable(): string[] {
+    const result = [this.sort!.active + ',' + (this.sort!.direction ? ASC : DESC)];
+    if (this.sort!.active !== 'id') {
       result.push('id');
     }
     return result;
   }
 
-  protected handleNavigation(): void {
-    combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
-      const page = params.get('page');
-      const pageNumber = +(page ?? 1);
-      const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === ASC;
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
-    });
-  }
 
-  protected onSuccess(data: IRetailer[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+
+  protected onSuccess(retailer: IRetailer[] | undefined, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/retailer'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
-        },
-      });
-    }
-    this.retailers = data ?? [];
-    this.ngbPaginationPage = this.page;
+    this.retailers = retailer as IRetailer[];
   }
 
   protected onError(): void {

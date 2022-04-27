@@ -6,8 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.famoco.myfirstjhipster.IntegrationTest;
-import com.famoco.myfirstjhipster.domain.ODF;
-import com.famoco.myfirstjhipster.repository.ODFRepository;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;

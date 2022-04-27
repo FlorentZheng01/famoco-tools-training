@@ -6,9 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.famoco.myfirstjhipster.IntegrationTest;
-import com.famoco.myfirstjhipster.domain.JobHistory;
 import com.famoco.myfirstjhipster.domain.enumeration.Language;
-import com.famoco.myfirstjhipster.repository.JobHistoryRepository;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;

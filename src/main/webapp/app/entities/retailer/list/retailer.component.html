@@ -1,8 +1,19 @@
 <div>
   <h2 id="page-heading" data-cy="RetailerHeading">
-    <span jhiTranslate="myFirstJhipsterApp.retailer.home.title">Retailers</span>
+    <span class="text-center" jhiTranslate="myFirstJhipsterApp.retailer.home.title">Retailers</span>
 
-    <div class="d-flex justify-content-end">
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="retailers?.length === 0">
+    <span jhiTranslate="myFirstJhipsterApp.retailer.home.notFound">No retailers found</span>
+  </div>
+
+  <div class="table-responsive shadow-lg mt-3 pb-5" id="entities">
+    <div>
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="myFirstJhipsterApp.retailer.home.refreshListLabel">Refresh List</span>
@@ -18,93 +29,58 @@
         <span jhiTranslate="myFirstJhipsterApp.retailer.home.createLabel"> Create a new Retailer </span>
       </button>
     </div>
-  </h2>
+    <mat-progress-bar *ngIf="isLoading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
+    <table mat-table matSort matSortActive="id" matSortDirection="desc" [dataSource]="retailers" class="mat-elevation-z8 col-12">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let retailer"> {{retailer.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let retailer"> {{retailer.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+        <td mat-cell *matCellDef="let retailer"> {{retailer.address}} </td>
+      </ng-container>
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail </th>
+        <td mat-cell *matCellDef="let retailer"> {{retailer.mail}} </td>
+      </ng-container>
+      <ng-container cdkColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef>View</th>
+        <td mat-cell *matCellDef="let retailer">
+          <button [routerLink]="['/retailer', retailer.id, 'view']" mat-raised-button color="primary">View</button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Edit</th>
+        <td mat-cell *matCellDef="let retailer">
+          <button [routerLink]="['/retailer', retailer.id, 'edit']"
+                  mat-raised-button color="accent">Edit
+          </button>
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete</th>
+        <td mat-cell *matCellDef="let retailer">
+          <button (click)="delete(retailer)" mat-raised-button color="warn">Delete</button>
+        </td>
+      </ng-container>
 
-  <jhi-alert-error></jhi-alert-error>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  <jhi-alert></jhi-alert>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="retailers?.length === 0">
-    <span jhiTranslate="myFirstJhipsterApp.retailer.home.notFound">No retailers found</span>
-  </div>
 
-  <div class="table-responsive" id="entities" *ngIf="retailers && retailers.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="name">
-            <span jhiTranslate="myFirstJhipsterApp.retailer.name">Name</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="phoneNumber">
-            <span jhiTranslate="myFirstJhipsterApp.retailer.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="address">
-            <span jhiTranslate="myFirstJhipsterApp.retailer.address">Address</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="mail">
-            <span jhiTranslate="myFirstJhipsterApp.retailer.mail">Mail</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let retailer of retailers; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/retailer', retailer.id, 'view']">{{ retailer.id }}</a>
-          </td>
-          <td>{{ retailer.name }}</td>
-          <td>{{ retailer.phoneNumber }}</td>
-          <td>{{ retailer.address }}</td>
-          <td>{{ retailer.mail }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/retailer', retailer.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/retailer', retailer.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(retailer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
     </table>
-  </div>
 
-  <div *ngIf="retailers && retailers.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25,100]"
+                   aria-label="Select page">
 
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
-    </div>
+    </mat-paginator>
+
+
   </div>
-</div>

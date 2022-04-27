@@ -25,14 +25,6 @@ public class Country implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @JsonIgnoreProperties(value = { "country", "oDF" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private People people;
-
-    @ManyToOne
-    private Personne personne;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -61,31 +53,6 @@ public class Country implements Serializable {
         this.description = description;
     }
 
-    public People getPeople() {
-        return this.people;
-    }
-
-    public void setPeople(People people) {
-        this.people = people;
-    }
-
-    public Country people(People people) {
-        this.setPeople(people);
-        return this;
-    }
-
-    public Personne getPersonne() {
-        return this.personne;
-    }
-
-    public void setPersonne(Personne personne) {
-        this.personne = personne;
-    }
-
-    public Country personne(Personne personne) {
-        this.setPersonne(personne);
-        return this;
-    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -6,9 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.famoco.myfirstjhipster.IntegrationTest;
-import com.famoco.myfirstjhipster.domain.Personne;
-import com.famoco.myfirstjhipster.repository.PersonneRepository;
-import java.util.List;
+
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
